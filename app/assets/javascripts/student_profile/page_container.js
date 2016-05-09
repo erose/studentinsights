@@ -94,10 +94,17 @@
     },
 
     onClickSaveService: function(serviceParams) {
-      this.setState({ requests: merge(this.state.requests, { saveService: 'pending' }) });
-      this.api.saveService(this.state.student.id, serviceParams)
-        .done(this.onSaveServiceDone)
-        .fail(this.onSaveServiceFail);
+        // Very quick name validation, just check for a comma
+        if ((/\w+, \w+/.test(serviceParams.providedByEducatorName)) ||
+            (serviceParams.providedByEducatorName === null)) {
+
+            this.setState({ requests: merge(this.state.requests, { saveService: 'pending' }) });
+            this.api.saveService(this.state.student.id, serviceParams)
+                .done(this.onSaveServiceDone)
+                .fail(this.onSaveServiceFail);
+        } else {
+            this.setState({ requests: merge(this.state.requests, { saveService: 'Please use the form Last Name, First Name' }) });
+        }
     },
 
     onSaveServiceDone: function(response) {
