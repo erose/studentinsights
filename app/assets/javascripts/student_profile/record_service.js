@@ -78,7 +78,8 @@
     },
 
     onProvidedByEducatorTyping: function(event) {
-      this.setState({ providedByEducatorName: event.target.value });
+      var updatedName = (event.target.value != "") ? event.target.value : null;
+      this.setState({ providedByEducatorName: updatedName });
     },
 
     onProvidedByEducatorDropdownSelect: function(string) {
