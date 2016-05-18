@@ -78,7 +78,8 @@
     },
 
     onProvidedByEducatorTyping: function(event) {
-      this.setState({ providedByEducatorName: event.target.value });
+      var updatedName = (event.target.value != "") ? event.target.value : null;
+      this.setState({ providedByEducatorName: updatedName });
     },
 
     onProvidedByEducatorDropdownSelect: function(string) {
@@ -193,8 +194,7 @@
           style: styles.cancelRecordServiceButton,
           onClick: this.onClickCancel
         }, 'Cancel'),
-        (this.props.requestState === 'pending') ? dom.span({}, 'Saving...') : null,
-        (this.props.requestState === 'error') ? dom.span({}, 'Try again!') : null
+        (this.props.requestState === 'pending') ? dom.span({}, 'Saving...') : this.props.requestState
       );
     }
   });
