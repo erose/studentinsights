@@ -33,9 +33,10 @@
       });
     },
 
-    renderDropdownToggle: function () {
+    renderDropdownToggle: function (){
       return dom.a({
         onClick: this.toggleOpenMenu,
+        href: 'bar',
         style: {
           position: 'relative',
           right: 20,
@@ -46,6 +47,7 @@
     },
 
     toggleOpenMenu: function () {
+      console.log("toggleOpenMenu");
       $(this.refs.ProvidedByEducatorDropdown).autocomplete("search", "");
     },
     closeMenu: function () {
@@ -54,7 +56,6 @@
     componentDidMount: function() {
       var self = this;
 
-      // TODO: We should write a spec for this!
       $(this.refs.ProvidedByEducatorDropdown).autocomplete({
         source: '/educators/services_dropdown/' + this.props.studentId,
         delay: 0,

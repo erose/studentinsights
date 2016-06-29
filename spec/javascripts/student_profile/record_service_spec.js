@@ -51,9 +51,7 @@ describe('RecordService', function() {
         'Reading intervention'
       ]);
 
-
       expect(el).toContainText('Who is working with Tamyra?');
-      // TODO (as): test staff dropdown autocomplete async
       expect(el).toContainText('When did they start?');
       expect($(el).find('.Datepicker .datepicker.hasDatepicker').length).toEqual(1);
       expect(helpers.findSaveButton(el).length).toEqual(1);
