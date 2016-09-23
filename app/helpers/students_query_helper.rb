@@ -5,9 +5,9 @@ module StudentsQueryHelper
   def student_hash_for_slicing(student)
     HashWithIndifferentAccess.new(student.as_json.merge({
       student_risk_level: student.student_risk_level.as_json,
-      discipline_incidents_count: student.most_recent_school_year.discipline_incidents.count,
-      absences_count: student.most_recent_school_year.absences.count,
-      tardies_count: student.most_recent_school_year.tardies.count,
+      discipline_incidents_count: student.most_recent_school_year.discipline_incidents.size,
+      absences_count: student.most_recent_school_year.absences.size,
+      tardies_count: student.most_recent_school_year.tardies.size,
       homeroom_name: student.try(:homeroom).try(:name)
     }))
   end
@@ -17,8 +17,8 @@ module StudentsQueryHelper
   def merge_mutable_fields_for_slicing(student_hashes)
     student_ids = student_hashes.map {|student_hash| student_hash[:id] }
     all_event_notes = EventNote.where(student_id: student_ids)
-    all_active_services = Service.where(student_id: student_ids).active
-    all_interventions = Intervention.where(student_id: student_ids)
+    all_active_services = Service.includes(:discontinued_services).where(student_id: student_ids).active
+    all_interventions = Intervention.includes(:intervention_type).where(student_id: student_ids)
 
     student_hashes.map do |student_hash|
       for_student = {
